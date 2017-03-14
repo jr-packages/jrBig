@@ -1,0 +1,78 @@
+---
+title: "Chapter 4 Solutions"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 4 solutions}
+-->
+
+### Exercise 1
+
+Load the package and make a connection
+
+```{r eval=FALSE}
+library(sparklyr)
+sc = spark_connect(master = "local")
+```
+In this exercise, we're going to use the `nycflights13` data set. Look at
+the associated help page `?nycflights13::flights` to get an overview of the data set.
+Load the `dplyr` package
+```{r eval=FALSE}
+library(dplyr)
+```
+and copy the dataframe across
+```{r  eval=FALSE}
+flights_tbl = copy_to(sc, nycflights13::flights, "flights")
+```
+List the available tables using `src_tbls(sc)`. Look
+
+### Exercise 2
+
+1. Using the `filter` dplyr function, select flights where the airtime was greater than 10 hours
+
+```{r  eval=FALSE}
+flights_tbl %>% filter(air_time > 10*60)
+```
+
+
+2. Lets investigate how delay varies with day of the month. The following code groups by 
+day of the week, then works out the conditional arrivial delay
+
+```{r eval=FALSE}
+delay = flights_tbl %>% 
+  group_by(day) %>%
+  summarise(delay = mean(arr_delay))
+```
+
+Now compare
+```{r eval=FALSE}
+delay
+delay_collect = delay %>% collect()
+```
+What's the difference? We can the delays easily ggplot2 (or base graphics)
+```{r eval=FALSE}
+ggplot(delay, aes(day, delay)) +
+  geom_point() +
+  geom_smooth()
+```
+3. Produce a similar plot for `dep_delay`
+
+
+4. **Tricky question**: Create a boxplot graphic where the x-axis is day of the week and the y-axis is the
+delay.
+
+#### Links
+
+  * [Spark](https://spark.apache.org/) homepage;
+    * Latest [version](https://spark.apache.org/docs/latest/);
+  * Stackoverflow: [sparkr](https://stackoverflow.com/questions/tagged/sparkr) & 
+  [sparklyr]](https://stackoverflow.com/questions/tagged/sparklyr] tagged questions;
+  * [SparkR](https://spark.apache.org/docs/latest/sparkr.html) & [sparklyr](http://spark.rstudio.com/) documentation
+  
+### Tasks
+
+  * There is a nice section on creating dataframes in the [SparkR](https://spark.apache.org/docs/latest/sparkr.html) documentation.
+  * Also have a look at the machine learning section.
+    

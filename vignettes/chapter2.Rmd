@@ -1,0 +1,34 @@
+---
+title: "Chapter 2 Exercises"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 2 Exercises}
+-->
+  
+To complete these exercises, you will need the following packages
+
+```{r eval=FALSE}
+install.packages(c("devtools", "readr", "feather"))
+devtools::install_github("Rdatatable/data.table")
+```
+
+## Exercise 1
+
+In the notes we generated a numeric data set. Here we'll repeat the timings, but 
+with characters. First generate a simple data set.
+```{r eval=FALSE}
+x = as.character(runif(1e6))
+x[sample(1e6, 1e5)] = NA # 10% NAs
+dd =  as.data.frame(replicate(10, x))
+```
+  * Time writing/reading the data frame to a file.
+  * Compare the file size of the resulting feather, RData and csv files.
+
+
+
+------
+Hint: It's worth reading the RStudio [blog](https://blog.rstudio.org/) from time 
+to time.

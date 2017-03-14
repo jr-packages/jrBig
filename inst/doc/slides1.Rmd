@@ -1,0 +1,139 @@
+---
+title: "R for Big data"
+author: Colin Gillespie & Jamie Owen
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+css: left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 1 Slides}
+-->
+
+## Course R package
+
+```{r eval=FALSE}
+install.packages("drat")
+drat::addRepo("rcourses")
+install.packages("jrBig")
+library("jrBig") # No errors
+```
+If that works, try and get the dependencies
+```{r eval=FALSE}
+install.packages("jrBig", dependencies = TRUE)
+```
+
+## Who am I?
+ 
+## Who are you?
+
+## Slides
+
+```{r eval=FALSE}
+## This is new. Expect difficulties
+vignette("slides1", package="jrBig")
+```
+
+
+# Update the package
+
+# 1.1 What is Big Data?
+
+## If it's not too personal
+
+> How big is your data?
+
+## 1.1 What is Big Data?
+
+  * Voluminous, occupying much RAM and hard disk space
+  * Variable, within each dataset and between sources
+  * High in velocity: it's always being generated.
+
+
+# 1.2 Coping with big data in R
+## 1.2 Coping with big data in R
+
+  * R loads data into RAM
+  * Development of a statistical model took more time than the computation. 
+    * Not with big data
+
+## Small data makes big data
+
+```{r echo=c(-1, -4), fig.height=5}
+data(USArrests, package="datasets")
+d = dist(USArrests)
+fit = hclust(d)
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,cex=0.7, las=1)
+plot(fit, labels=rownames(d))
+```
+
+## Small data makes big data
+
+```{r}
+pryr::object_size(USArrests)
+pryr::object_size(d)
+```
+
+# Strategies
+
+## Strategies
+
+> * Buy more RAM
+
+```{r}
+benchmarkme::get_ram()
+```
+
+> * Sampling
+  * Integration with C++ or Java 
+  * Avoid storing objects in memory 
+
+## Background (not in the notes)
+
+  * Covered in Efficient R course
+  * Detailed notes are available at chapter 8 of https://csgillespie.github.io/efficientR/
+  * Brief overview
+
+## File sizes
+
+  * A computer cannot store "numbers" or "letters"
+  * The only thing a computer can store and work with is bits. 
+  * A bit is binary, it is either a $0$ or a $1$. 
+
+## Bit Representation
+
+Bit representation | Character
+-------------------|---------
+$01000001$ | A
+$01000010$ | B
+$01000011$ | C
+$01000100$ | D
+$01000101$ | E
+$01010010$ | R
+
+
+## Bits and bytes
+
+  * Eight bits is one byte
+    * Four bits is called a nibble
+  * So two characters would use two bytes or 16 bits. 
+  * A document containing $100$ characters would use $100$ bytes ($800$ bits). 
+  * This assumes that the file didn't have any other memory overhead, such as font information or meta-data
+  * An empty `.docx` file takes about 3.7KB of storage
+
+## Standards
+
+  *  $1KB = 10^3 = 1000B$
+  *  $1MB = 10^6 = 1,000,000B$
+  *  $1GB = 10^9 = 1,000,000,000B$
+  *  $1TB = 10^12B$
+  *  $1PB  = 10^15B$
+
+## Five minute exercise
+
+  1. R loads everything into memory, i.e. your computers RAM. How much RAM do you have?
+  2. Using Google, how much does it cost (in pounds) to double the amount of available RAM? 
+    * How much does it cost to rent a machine comparable to your laptop in the cloud?
+
+
+

@@ -1,0 +1,38 @@
+---
+title: "Chapter 2 Solutions"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 2 solutions}
+-->
+
+## Exercise 1
+
+In the notes we generated a numeric data set. Here we'll repeat the timings, but 
+with characters. First generate a simple data sets.
+```{r eval=FALSE}
+x = as.character(runif(1e6))
+x[sample(1e6, 1e5)] = NA # 10% NAs
+dd =  as.data.frame(replicate(10, x))
+```
+then time writing/reading the data frame to a file.
+
+## Exercise 2
+
+Instead of passing a data frame to a function. Try just passing a very large vector. 
+Is there still a speed-up?
+
+
+```{r eval=FALSE}
+f = function(x) {x[1] = 0; x}
+g = function(e) e$x[1] = 0 
+x = rnorm(1e5)
+e = new.env(); e$x = x
+system.time(replicate(1000, f(x)))
+system.time(replicate(1000, g(e)))
+```
+------
+Hint: It's worth reading the RStudio [blog](https://blog.rstudio.org/) from time 
+to time.

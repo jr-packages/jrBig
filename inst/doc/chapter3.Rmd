@@ -1,0 +1,109 @@
+---
+title: "Chapter 3 Exercises"
+author: "Colin Gillespie"
+output: rmarkdown::html_vignette
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 3 Exercises}
+-->
+
+
+## Exercise 1
+
+Load the `world_bank` dataset
+
+```{r, results="hide", echo=-1, message=FALSE}
+library("dplyr")
+data(world_bank, package="jrBig")
+```
+
+Convert the data frame into a `dplyr` data frame
+```{r}
+wb = tbl_df(world_bank)
+```
+
+1. Print the `world_bank` and `wb` data frames to screen. What's different?
+1. What does the `glimpse` function do? Hint: just try it on a data frame.
+1. Using `wb`, complete the following tasks.
+  * `filter`
+    * Filter to retain data from the Country `AFG`;
+    * Filter to retain data for years between 1980 and 1990.
+  * `select`
+    * Remove the `Year.Code` column;
+    * Select columns `Year` and `gini`;
+  * `mutate`
+    * Create a new column called `Year2010` that is `yes` for rows where `Year > 2010`
+  * `arrange`
+    * Sort the data by `Year` in descending order and `gini`
+  * `summarise`: 
+    * Calculate the standard deviation of the `gdp_percap` column.
+ * Bonus function. What does `slice` do? Try
+    * `slice(wb, 1:3)`, `slice(wb, 5:10)`, `slice(wb, n())`
+    * What does `n()` do?
+1. Look at the documentation for the `sample_n` function. Can you sample
+$100$ rows from the data set?
+
+## Exercise 2
+
+1. Calculate the mean `gini` and `gdp_percap` for each country; set `na.rm=TRUE` 
+in the mean function. Hint: group by Country.
+```{r echo=FALSE, results="hide"}
+gb = group_by(wb, Year)
+summarise(gb, mean(gini, na.rm=TRUE), mean(gdp_percap, na.rm=TRUE))
+```
+1. Calculate the median `gini` and `gdp_percap` for each country per year.
+```{r results="hide", echo=FALSE}
+gb = group_by(wb, Year, Country.Code)
+summarise(gb, median(gini, na.rm=TRUE), median(gdp_percap, na.rm=TRUE))
+```
+
+Using the pipe operator, link the following operations together (for the `wb` data set)
+
+1. Filter to retain data from the Country `AFG`;
+    * then remove the `Year.Code` column;
+    * then sort the data by `Year` in descending order and `gini`
+1. Filter to retain data for years between 1980 and 1990;
+    * then select columns `Year` and `gini`;
+    * create a new column called `Year2010` that is `yes` for rows where `Year > 2010`
+```{r echo=FALSE, results="hide"}
+wb = tbl_df(world_bank)
+wb %>% 
+  filter(Country.Code == "AFG") %>%
+  select(-1) %>%
+  mutate(Year2010 = Year > 2010)
+```
+
+Compare 
+    ```{r results="hide"}
+    wb %>% group_by(Year, Country.Code) %>%
+        summarise(gini=median(gini, na.rm=TRUE)) %>%
+        summarise(max(gini, na.rm=TRUE))
+    ```
+and
+    ```{r results="hide"}
+      wb %>% group_by(Country.Code, Year) %>%
+        summarise(gini=median(gini, na.rm=TRUE)) %>%
+        summarise(max(gini, na.rm=TRUE))
+    ```
+  * Why are the answers different? What's happening?
+
+## Exercise 3
+
+1. Create an sql lite (or mysql, pgsql) database
+    ```{r eval=FALSE}
+    db = src_sqlite(path=tempfile(), create=TRUE)
+    wb_sqlite = copy_to(db, world_bank, temporary = FALSE)
+    wb_sqlite = tbl(db, "world_bank")
+    src_desc(db) ## Gives you some details
+    src_tbls(db) ## Lists the tables in the DB
+    ```
+1. Extract the top 50 rows from this table.
+1. Redo exercise 3, but using the data base query. 
+    * Examine the underlying SQL code;
+    * Use `collect` to get the database.
+
+
+---
+**Tip**: Check out [dplyr](https://cran.r-project.org/web/packages/dplyr/)'s CRAN 
+page.

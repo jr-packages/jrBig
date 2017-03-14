@@ -1,0 +1,174 @@
+---
+title: "Chapter 6: Visualisation"
+author: Colin Gillespie
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+css: left.css
+---
+
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 6 Slides}
+-->
+
+## Big picture (no pun intended)
+
+```{r echo=FALSE}
+knitr::include_graphics("graphics/dawson.jpg")
+```
+
+# 6.1 The `bigvis` package
+## `6.1 bigvis`
+
+  * Exploratory data analysis of large datasets ($10-100$ million obs). 
+  * Operations should take less than $5$ seconds on a standard computer-
+    - even when the sample size is $100$
+  * Not on CRAN
+  
+```{r eval=FALSE, tidy=FALSE}
+devtools::install_github("hadley/bigvis")
+```
+
+## Comments
+
+  * Directly visualising raw big data is pointless. 
+  * If we create a $100$ million point scatter plot
+    - Likely to run out of pixels! 
+  * Compare
+
+```{r fig.keep="none"}
+par(mfrow=c(1, 2))
+plot(1, 1, ylab="")
+plot(rep(1, 1e3), rep(1, 1e3), ylab="")
+```
+
+## dplyr and bigvis
+
+  * Structured around a few key functions
+  * Fast C++ backend
+  * Handles outliers
+  
+## 6.1.1 Bin and condense
+
+  * Compact summaries
+  * For example, suppose we generate $10^5$ random numbers from the $t$
+distribution
+    ```{r echo=3, message=FALSE}
+    library("bigvis")
+    set.seed(1)
+    x = rt(1e5, 5)
+    ```
+    
+## 6.1.1 Bin and condense 
+
+The `bin` and `condense` functions create the binned variable
+    ```{r message=TRUE}
+    library("bigvis")
+    ## Bin in blocks of 0.01
+    (x_sum = condense(bin(x, 0.01)))
+    ```
+
+## 6.1.2 Smooth
+
+  * After binning, smooth out any rough estimates 
+```{r echo=1:2, fig.height=4}
+## h is the binwidth (similar to bin size)
+x_smu = smooth(x_sum, h = 5 / 100)
+
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
+                      cex.axis=0.9, las=1)
+plot(x_sum, panel.first=grid(), xlim=c(-12, 12), 
+     ylab="Count", pch=21, cex=0.6)
+lines(x_smu, col=2, lwd=2)
+text(5, 200, "Smoothed line", col=2)
+```
+
+## `autoplot` (ggplot2)
+
+```{r, echo=-1, message=FALSE, fig.height=4}
+library(ggplot2)
+autoplot(x_sum) + theme_bw()
+```
+
+## Middle 99\% (peel)
+
+```{r, fig.height=4}
+autoplot(peel(x_smu)) + theme_bw()
+```
+
+## 6.1.3 IMDB
+
+```{r}
+data(movies, package="bigvis")
+```
+
+```{r tidy=FALSE, message=FALSE}
+n_bins = 1e4
+bin_data = with(movies, 
+    condense(bin(length, find_width(length, n_bins)),
+             bin(rating, find_width(rating, n_bins))))
+```
+
+## IMDB heatmap
+
+```{r fig.height=4}
+ggplot(bin_data, aes(length, rating, fill=.count )) + 
+  geom_raster() + theme_bw()
+```
+
+
+## Outliers
+```{r}
+## Longer than one day!!
+subset(movies[ ,c("title", "length", "rating")], length > 24*60)
+```
+
+
+## `last_plot`
+
+```{r, fig.height=4}
+last_plot() %+% peel(bin_data)
+```
+
+
+# Exercise 1 
+## Exercise 1 
+```{r eval=FALSE}
+vignette("graphics", package="nclRbig")
+```
+
+# 6.2 Tableplots: the tabplot package
+## 6.2 Tableplots
+
+  * Tableplots can be used to explore and analyse large data sets. 
+  * These plots can be used to explore variable relationships and check data quality. 
+    * `ff` interface
+  * Numeric variables are plotted as histograms of the mean values
+  * Stacked bar charts are used to show category proportions
+  * Missing values highlighted.
+  * No characters
+  
+## Tableplot of the movie dataset
+
+```{r message=FALSE, fig.height=5}
+library("tabplot")
+tableplot(movies[,3:5])
+```
+## Tableplot: `sortCol`
+
+```{r}
+tableplot(movies[,3:5], sortCol=3)
+```
+
+## Zooming
+
+```{r width=5}
+tableplot(movies[,3:5], sortCol=3, from=0, to=10)
+```
+
+
+# Exercise 2
+## Exercise 2
+```{r eval=FALSE}
+vignette("graphics")
+```

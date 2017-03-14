@@ -1,0 +1,277 @@
+---
+title: "Chapter 5: The Rcpp Package"
+author: Colin Gillespie
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+css: left.css
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chapter 5 Slides}
+-->
+
+# 5.1 Introduction
+## 5.1 Introduction
+
+  * Sometimes R is just slow. 
+  * You've tried every trick you know, and your code is still crawling along
+  * Rewrite code in C/C++
+    * Using `.Call` is very painful
+
+## Rcpp
+
+  * There's a better way! Rcpp!
+     * In this chapter, C and C++ code are largely [interchangeable](http://programmers.stackexchange.com/q/16390/14846)
+  * Goal: provide a flavour of what's possible.
+    * No previous C++ experience
+
+## Exercise: Are you ready?
+
+```{r eval=FALSE}
+install.packages("Rcpp")
+```
+
+```{r results="hide"}
+jrBig::test_rcpp()
+```
+See Pre-requisites in the notes if you have problems
+
+# 5.2 A simple C++ function
+## 5.2 A simple C++ function
+
+```{r}
+## R version
+add_r = function(x, y) {
+  return(x + y)
+} 
+```
+
+```{r engine='Rcpp', eval=FALSE}
+/* Return type double
+ * Two arguments, also doubles
+ */
+double add_c(double x, double y) {
+    double value = x + y;
+    return value;
+}
+```
+
+> Exercise: What differences do you see?
+
+## The `main` function
+
+  * Typically we need a function `main`; not here. 
+  * Rcpp makes it easy to call C++ functions from R
+  * Users doen't have to worry about
+    * platform;
+    * compilers;
+    * R/C interface.
+
+## The `cppFunction` command
+
+```{r message=FALSE}
+library("Rcpp")
+cppFunction('
+  double add_c(double x, double y){
+    double value = x + y;
+    return value;
+  }
+')
+```
+
+Rcpp then performs magic!
+
+## The magic
+
+```{r}
+add_c
+```
+
+We can call the `add_c`} function in the usual way
+
+```{r}
+add_c(1, 2)
+```
+
+# Chapter 3: Exercise 1
+## Chapter 3: Exercise 1
+
+```{r eval=FALSE}
+vignette("Rcpp", package="jrBig")
+```
+
+# 5.2.2 C/C++ data types
+## 5.2.2 C/C++ data types
+
+ Type | Description
+------|-----------
+`char` | A single character.
+`int` | An integer.
+`float` | A single precision floating point number.
+`double` | A double-precision floating point number.
+`void` | A valueless quantity.
+
+There are also `pointer`'s
+
+
+# 5.3 The sourceCpp function
+## 5.3 The sourceCpp function
+
+  * The `cppFunction` is great for small examples
+  * But you should put C++ code in a separate file (`.cpp`)
+    * `sourceCpp("path/to/file.cpp")`
+  * The `.cpp` needs a few headers
+  
+## `.Cpp` components
+
+Access Rcpp functions (similar to a `library` call)
+```{r engine='Rcpp', eval=FALSE}
+#include <Rcpp.h>
+```
+
+## Namespace
+
+
+  * To access the Rcpp functions we would have to type `Rcpp::function_1`
+  * To avoid typing `Rcpp::`
+    ```{r engine="Rcpp", eval=FALSE}
+    using namespace Rcpp;
+    ```
+  * Above each function we want to export/use in R
+    ```{r engine="Rcpp", eval=FALSE}
+    // [[Rcpp::export]]
+    ```
+
+## Complete file
+
+```{r engine="Rcpp"}
+# include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double add_c(double x, double y) {
+  double value = x + y;
+  return value;
+}
+```
+
+## Benefits of a file
+
+1. Syntax highlighting
+1. It's easy to make errors switching between R and C++ in the same file
+
+To save space, we we'll omit the headers for the remainder of the chapter.
+
+# Exercise 2
+## Exercise 2
+```{r eval=FALSE}
+vignette("Rcpp", package="jrBig")
+```
+
+# 5.4 Vectors and loops
+## `mean_r`
+
+```{r}
+mean_r = function(x) {
+  n = length(x)
+  m = 0
+  for(i in seq_along(x))
+    m = m + x[i]/n
+  m
+}
+```
+
+## `mean_c`
+
+```{r engine="Rcpp",eval=FALSE}
+double mean_c(NumericVector x){
+  int i;
+  int n = x.size();
+  double mean = 0;
+
+  for(i=0; i<n; i++) {
+    mean = mean + x[i]/n;
+  }
+  return mean;
+}
+sourceCpp("../src/mean_c.cpp")
+```
+```{r echo=FALSE} 
+cppFunction('double mean_c(NumericVector x){
+  int i;
+  int n = x.size();
+  double mean = 0;
+
+  for(i=0; i<n; i++) {
+    mean = mean + x[i]/n;
+  }
+  return mean;
+}')
+```
+
+## Speed comparison
+
+```{r}
+library("microbenchmark")
+```
+
+We generate some normal random numbers for the comparison
+
+```{r}
+x = rnorm(1e4)
+```
+
+Then call the `microbenchmark` function.
+
+```{r cache=TRUE}
+z = microbenchmark(
+  mean(x),
+  mean_r(x),
+  mean_c(x)
+)
+```
+
+## Results
+
+```{r echo=FALSE}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1)
+boxplot(z, ylab="Time", col="steelblue")
+grid()
+```
+
+# Exercise 3
+## Exercise 3
+```{r eval=FALSE}
+vignette("Rcpp", package="jrBig")
+```
+
+
+# 5.5 C++ with sugar on top
+## 5.5 The sugared version
+
+  * Rcpp sugar brings a higher-level of abstraction to C++ code written using the
+Rcpp API. 
+
+```{r engine="Rcpp", eval=FALSE}
+NumericVector res_c(NumericVector x, NumericVector y) {
+  int i;
+  int n = x.size();
+  NumericVector residuals(n);
+  for(i=0; i<n; i++) {
+    residuals[i] = pow(x[i] - y[i], 2);
+  }
+  return residuals;
+}
+```
+
+## With Sugar
+
+```{r engine="Rcpp", eval=FALSE}
+NumericVector res_sugar(NumericVector x, NumericVector y) {
+  return pow(x - y, 2);
+}
+```
+
+  * The sugar versions aren't usually faster than the C++ version, 
+     - but there's usually very little difference between the two. 
+  * However with the sugared variety, the code is shorter and is constantly being improved.
