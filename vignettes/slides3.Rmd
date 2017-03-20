@@ -56,7 +56,7 @@ head(ghg_ems, 3)
 
   * Printing
   * tibbles are more strict: 
-    * no to partial matching, 
+    * no partial matching, 
     * generate a warning if the column you are trying to access does not exist
   * S3 class magic
 

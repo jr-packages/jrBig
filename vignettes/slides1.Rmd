@@ -1,6 +1,6 @@
 ---
 title: "R for Big data"
-author: Colin Gillespie & Jamie Owen
+author: Colin Gillespie
 date: "`r Sys.Date()`"
 output: ioslides_presentation
 css: left.css
@@ -14,18 +14,15 @@ css: left.css
 
 ```{r eval=FALSE}
 install.packages("drat")
-drat::addRepo("rcourses")
+drat::addRepo("jr-packages")
 install.packages("jrBig")
 library("jrBig") # No errors
+packageVersion("jrBig")
 ```
 If that works, try and get the dependencies
 ```{r eval=FALSE}
 install.packages("jrBig", dependencies = TRUE)
 ```
-
-## Who am I?
- 
-## Who are you?
 
 ## Slides
 

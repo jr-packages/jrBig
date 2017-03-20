@@ -1,11 +1,11 @@
 ---
-title: "Chapter 4 Solutions"
-author: "Colin Gillespie"
+title: "Chapter 3 Solutions"
+author: "Jumping Rivers"
 output: rmarkdown::html_vignette
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Chapter 4 solutions}
+%\VignetteIndexEntry{Chapter 3 solutions}
 -->
 
 ## Exercise 1

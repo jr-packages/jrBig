@@ -1,7 +1,7 @@
 Package: jrBig
 Type: Package
 Title: R for Big Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(person("Colin", "Gillespie", email="csgillespie@gmail.com", role = c("aut", "cre")))
 Description: Data sets, functions and vignettes for the R for Big data course.
 URL: http://www.jumpingrivers.com

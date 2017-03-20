@@ -1,3 +1,5 @@
 dd.*
 *_cache
 *.log
+log4j.spark.log.*
+slides2_files

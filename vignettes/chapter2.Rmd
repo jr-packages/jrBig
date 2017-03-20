@@ -1,6 +1,6 @@
 ---
 title: "Chapter 2 Exercises"
-author: "Colin Gillespie"
+author: "Jumping Rivers"
 output: rmarkdown::html_vignette
 ---
 <!--
@@ -8,12 +8,12 @@ output: rmarkdown::html_vignette
 %\VignetteIndexEntry{Chapter 2 Exercises}
 -->
   
-To complete these exercises, you will need the following packages
+<!-- To complete these exercises, you will need the following packages -->
 
-```{r eval=FALSE}
-install.packages(c("devtools", "readr", "feather"))
-devtools::install_github("Rdatatable/data.table")
-```
+<!-- ```{r eval=FALSE} -->
+<!-- install.packages(c("devtools", "readr", "feather")) -->
+<!-- devtools::install_github("Rdatatable/data.table") -->
+<!-- ``` -->
 
 ## Exercise 1
 
@@ -32,3 +32,49 @@ dd =  as.data.frame(replicate(10, x))
 ------
 Hint: It's worth reading the RStudio [blog](https://blog.rstudio.org/) from time 
 to time.
+
+## Exercise 2 (bonus)
+
+You can also use environments to speed up passing data (Bioconductor does this). 
+Unfortunately, we don't have time to cover environments in this course - 
+see our [Advanced R programming](www.jumpingrivers.com)
+
+To create an enviroment we use the `new.env()` function
+
+```{r}
+e = new.env()
+```
+
+and then place a matrix into that enviroment
+```{r}
+x = matrix(runif(10000), ncol=10)
+e$x = x
+```
+
+Next we'll create two functions to benchmark
+```{r}
+f = function(x) {
+  x[1,1] = 1
+  x
+}
+g = function(e) e$x[1,1] = 1
+```
+Then time as before
+```{r eval=FALSE}
+system.time({
+  for(i in 1:100000) {
+    x = f(x)
+  }
+})
+
+system.time({
+  for(i in 1:100000) {
+    g(e)
+  }
+})
+```
+Repeat the above task but change the matrix to a data frame.
+
+The reason that using an environment is more efficient is because we pass by reference (again we don't cover that today)
+
+![](graphics/pass.gif)

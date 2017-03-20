@@ -1,6 +1,6 @@
 ---
-title: "chapter 4: Apache Spark"
-author: Colin Gillespie
+title: "Chapter 4: Apache Spark"
+author: Jumping Rivers
 date: "`r Sys.Date()`"
 output: ioslides_presentation
 css: left.css
@@ -38,7 +38,7 @@ css: left.css
   * Cluster Managers.
   * Third party libraries: Like R and Python, developers are encouraged to
   extend Spark. Over 100 additional libraries have been contributed so far,
-  each of which can be rated by the community\sidenote{\url{http://spark-packages.org/}}. 
+  each of which can be rated by the community. 
 
 ## Does anyone use it?
 
@@ -76,6 +76,9 @@ css: left.css
   * But we
   believe that the `sparklyr` package is a better long term bet.
 
+```{r echo=FALSE, message=FALSE}
+library("sparklyr")
+```
 
 # 4.2 A first Spark instance
 
@@ -89,7 +92,7 @@ install.packages("sparklyr")
 
 To use the `sparklyr` package, you need a local copy of Spark.
 
-```{r results="hide"}
+```{r results="hide", eval=FALSE}
 library("sparklyr")
 spark_available_versions()
 ```
@@ -162,13 +165,11 @@ tail(movies_tbl)
 
 ## All tables
 
-
 ```{r}
 src_tbls(sc)
 ```
 
 Typically you would have more than a single table.
-
 
 ## Resilient distributed datasets (RDD)
 
@@ -185,7 +186,7 @@ http://spark.rstudio.com/dplyr.html
 
 ## Using `dplyr`
 
-  * The major benefit of using \cc{sparklyr} over \cc{SparkR} is that \cc{dplyr}
+  * The major benefit of using `sparklyr` over `SparkR` is that `dplyr`
 just slots into the work flow. 
 
 ```{r}
@@ -226,7 +227,7 @@ http://spark.rstudio.com/mllib.html
 ## Machine learning/Statistcal algorithms
 
   * The main reason for using Spark are the machine learning algorithms.
-  * Most, __but not all!__ of this functionality is avalible within
+  * Most, __but not all!__ of this functionality is available within
 `sparklyr`. 
   * As with the other functions, we access the machine learning
 algorithms by passing a `spark_connection` object.
@@ -247,7 +248,7 @@ m = movies_tbl %>%
 
 ## Machine learning/Statistcal algorithms
 
-The object `m` contains the relevant regression  cofficients
+The object `m` contains the relevant regression  coefficients
 
 ```{r eval=FALSE}
 m

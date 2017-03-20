@@ -1,6 +1,6 @@
 ---
 title: "Chapter 3 Exercises"
-author: "Colin Gillespie"
+author: "Jumping Rivers"
 output: rmarkdown::html_vignette
 ---
 <!--
