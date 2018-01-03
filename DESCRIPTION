@@ -13,12 +13,13 @@ Imports:
     ff,
     ffbase,
     readr,
-    pryr, stats, microbenchmark, ggplot2, benchmarkme
+    pryr, stats, microbenchmark, ggplot2, benchmarkme, jrData
 Suggests:
     Rcpp, knitr, rmarkdown, bigvis, tabplot, RSQLite, data.table, sparklyr,
     nycflights13, DBI, ggplot2movies,RSQLite,
     dbplyr (>= 1.1.0)
 VignetteBuilder: knitr
 Remotes:
-  hadley/bigvis
+  hadley/bigvis, 
+  jr-packages/jrData
 RoxygenNote: 6.0.1
