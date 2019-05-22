@@ -15,7 +15,7 @@ output: rmarkdown::html_vignette
     library("ff")
     ```
 1. Create a dummy csv file and compare the read times of `read.csv.ffdf` and `read.csv`
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 ffx = read.csv.ffdf(file=filename, header=TRUE)
 dd = read.csv(file=filename, header=TRUE)
 ```
