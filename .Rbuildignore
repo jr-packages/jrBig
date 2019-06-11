@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 .travis.yml
 my_db*.sqlite3
+^.lintr$

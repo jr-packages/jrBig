@@ -14,9 +14,9 @@
 #' }
 #' @export
 create_rand = function(filename=NULL, n=1e4, seed=NULL) {
-  if(!is.null(seed)) set.seed(seed)
-  x = data.frame(x=rnorm(n), y=rnorm(n))
-  if(!is.null(filename)) write_csv(x, path = filename)
+  if (!is.null(seed)) set.seed(seed)
+  x = data.frame(x = rnorm(n), y = rnorm(n))
+  if (!is.null(filename)) write_csv(x, path = filename)
   invisible(x)
 }
 

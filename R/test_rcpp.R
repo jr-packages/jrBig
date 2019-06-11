@@ -5,12 +5,12 @@ globalVariables("add_c")
 #' @return Returns \code{TRUE} if everything is OK.
 #' @export
 test_rcpp = function() {
-  Rcpp::cppFunction('
+  Rcpp::cppFunction("
   int add_c(int x, int y){
     return x + y;
   }
-')
-  if(add_c(1, 1) == 2) {
+")
+  if (add_c(1, 1) == 2) {
     message("Everything seems fine")
     return(TRUE)
   }
