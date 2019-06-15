@@ -16,10 +16,9 @@ Imports:
     pryr, stats, microbenchmark, ggplot2, benchmarkme, jrData
 Suggests:
     Rcpp, knitr, rmarkdown, bigvis, tabplot, RSQLite, data.table, sparklyr,
-    nycflights13, DBI, ggplot2movies, RSQLite, testthat, lintr
-    dbplyr (>= 1.1.0)
+    nycflights13, DBI, ggplot2movies, testthat, lintr, dbplyr (>= 1.1.0)
 VignetteBuilder: knitr
 Remotes:
   hadley/bigvis, 
   jr-packages/jrData
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
