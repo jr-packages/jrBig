@@ -82,4 +82,3 @@ delay.
   * Stackoverflow: [sparkr](https://stackoverflow.com/questions/tagged/sparkr) & 
   [sparklyr]](https://stackoverflow.com/questions/tagged/sparklyr] tagged questions;
   * [SparkR](https://spark.apache.org/docs/latest/sparkr.html) & [sparklyr](http://spark.rstudio.com/) documentation
-  
