@@ -18,7 +18,7 @@ the data frame will include a mixture of numbers and missing values.
 x = runif(1e7)
 x[sample(1e7, 1e6)] = NA # 10% NAs
 dd =  as.data.frame(replicate(10, x))
-@
+```
 
 
 ```{r include=FALSE, echo=FALSE, cache=TRUE}
@@ -43,13 +43,13 @@ system.time(read.csv("dd.csv"))
 Base R: `readRDS`/`saveRDS`
   
 ```{r results="hide", cache=TRUE}
-system.time(saveRDS(dd, file="dd.RData"))
+system.time(saveRDS(dd, file = "dd.RData"))
 #   user  system elapsed 
 # 101.77    0.28  102.69 
-system.time(readRDS(file="dd.RData"))
+system.time(readRDS(file = "dd.RData"))
 #   user  system elapsed 
 #  5.052   0.104   5.148 
-````
+```
 
 The [data.table](https://github.com/Rdatatable/data.table/wiki) package
 
@@ -92,21 +92,21 @@ writes = c(104, 102, 4.1, 190, 1.319)
 reads = c(152, 5.1, 22.07, 18.58, 0.422)
 n = c("read.csv", "Rdata", "data.table", "readr", "feather")
 
-par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
-    cex.axis=0.8, las=1, xaxs='i',yaxs='i')
-barplot(writes, names.arg=n, col="steelblue", 
-        border=NA, space=0.05, ylim=c(0, 200), 
-        ylab="Time(s)")
-abline(h=seq(0, 200, 20), col="white")
-title("Write times", adj=1, 
-      cex.main=1, font.main=2, col.main="black")
+par(mar = c(3, 3, 2, 1), mgp = c(2, 0.4, 0), tck = -.01,
+    cex.axis = 0.8, las = 1, xaxs = "i", yaxs = "i")
+barplot(writes, names.arg = n, col = "steelblue", 
+        border = NA, space = 0.05, ylim = c(0, 200), 
+        ylab = "Time(s)")
+abline(h = seq(0, 200, 20), col = "white")
+title("Write times", adj = 1, 
+      cex.main = 1, font.main = 2, col.main = "black")
 
- par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
-     cex.axis=0.8, las=1, xaxs='i',yaxs='i')
-barplot(reads, names.arg=n, col="steelblue", 
-        border=NA, space=0.05, ylim=c(0, 200), 
-        ylab="Time(s)")
-abline(h=seq(0, 150, 20), col="white")
-title("Read times", adj=1, 
-      cex.main=1, font.main=2, col.main="black")
+ par(mar = c(3, 3, 2, 1), mgp = c(2, 0.4, 0), tck = -.01,
+     cex.axis = 0.8, las = 1, xaxs = "i", yaxs = "i")
+barplot(reads, names.arg = n, col = "steelblue", 
+        border = NA, space = 0.05, ylim = c(0, 200), 
+        ylab = "Time(s)")
+abline(h = seq(0, 150, 20), col = "white")
+title("Read times", adj = 1, 
+      cex.main = 1, font.main = 2, col.main = "black")
 ```

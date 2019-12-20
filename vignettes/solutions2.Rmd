@@ -26,7 +26,9 @@ Is there still a speed-up?
 
 
 ```{r eval=FALSE}
-f = function(x) {x[1] = 0; x}
+f = function(x) {
+  x[1] = 0; x
+}
 g = function(e) e$x[1] = 0 
 x = rnorm(1e5)
 e = new.env(); e$x = x

@@ -17,9 +17,9 @@ get_rand()
 \item{seed}{Optional seed}
 }
 \description{
-A simple function for creating a n by 2 matrix filled with random numbers. The
-matrix is stored as a csv file. The function \code{get_rand} returns where the file
-is stored.
+A simple function for creating a n by 2 matrix filled with random numbers.
+The matrix is stored as a csv file. The function \code{get_rand} returns
+where the file is stored.
 }
 \examples{
 \dontrun{

@@ -15,7 +15,7 @@ Load the `world_bank` dataset
 
 ```{r, results="hide", echo=-1, message=FALSE}
 library("dplyr")
-data(world_bank, package="jrBig")
+data(world_bank, package = "jrBig")
 ```
 
 Convert the data frame into a `dplyr` data frame
@@ -50,12 +50,12 @@ $100$ rows from the data set?
 in the mean function. Hint: group by Country.
 ```{r echo=FALSE, results="hide"}
 gb = group_by(wb, Year)
-summarise(gb, mean(gini, na.rm=TRUE), mean(gdp_percap, na.rm=TRUE))
+summarise(gb, mean(gini, na.rm = TRUE), mean(gdp_percap, na.rm = TRUE))
 ```
 1. Calculate the median `gini` and `gdp_percap` for each country per year.
 ```{r results="hide", echo=FALSE}
 gb = group_by(wb, Year, Country.Code)
-summarise(gb, median(gini, na.rm=TRUE), median(gdp_percap, na.rm=TRUE))
+summarise(gb, median(gini, na.rm = TRUE), median(gdp_percap, na.rm = TRUE))
 ```
 
 Using the pipe operator, link the following operations together (for the `wb` data set)
@@ -76,15 +76,17 @@ wb %>%
 
 Compare 
     ```{r results="hide"}
-    wb %>% group_by(Year, Country.Code) %>%
-        summarise(gini=median(gini, na.rm=TRUE)) %>%
-        summarise(max(gini, na.rm=TRUE))
+    wb %>%
+      group_by(Year, Country.Code) %>%
+      summarise(gini = median(gini, na.rm = TRUE)) %>%
+      summarise(max(gini, na.rm = TRUE))
     ```
 and
     ```{r results="hide"}
-      wb %>% group_by(Country.Code, Year) %>%
-        summarise(gini=median(gini, na.rm=TRUE)) %>%
-        summarise(max(gini, na.rm=TRUE))
+      wb %>%
+      group_by(Country.Code, Year) %>%
+      summarise(gini = median(gini, na.rm = TRUE)) %>%
+      summarise(max(gini, na.rm = TRUE))
     ```
   * Why are the answers different? What's happening?
 
@@ -92,7 +94,7 @@ and
 
 1. Create an sql lite (or mysql, pgsql) database
     ```{r eval=FALSE}
-    db = src_sqlite(path=tempfile(), create=TRUE)
+    db = src_sqlite(path = tempfile(), create = TRUE)
     wb_sqlite = copy_to(db, world_bank, temporary = FALSE)
     wb_sqlite = tbl(db, "world_bank")
     src_desc(db) ## Gives you some details

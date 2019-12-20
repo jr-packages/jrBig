@@ -74,7 +74,7 @@ css: left.css
   * This can be in done in our `bashrc` file, or in R itself, via
 
     ```{r eval=FALSE, echo=1}
-    Sys.setenv(SPARK_HOME="/path/to/spark/")
+    Sys.setenv(SPARK_HOME = "/path/to/spark/")
     ```
   * Then we load the `SparkR` package
 
@@ -86,7 +86,7 @@ css: left.css
 
 Next we initialise the Spark cluster and create a `SparkContext` 
 ```{r eval=FALSE}
-sc = sparkR.init(master="local")
+sc = sparkR.init(master = "local")
 ```
 
 ## A first Spark instance
@@ -95,7 +95,7 @@ sc = sparkR.init(master="local")
   * In particular if we want to use any Spark packages, these should be specified during the initialisation stage. 
   * So if we wanted to load in a csv file, we would need something like
 ```{r eval=FALSE}
-sc = sparkR.init(sparkPackages="com.databricks:spark-csv_2.11:1.0.3")
+sc = sparkR.init(sparkPackages = "com.databricks:spark-csv_2.11:1.0.3")
 ```
 
 ## A first Spark instance
@@ -131,7 +131,7 @@ sparkR.stop()
 
 In any case, the `moby` object is an RDD object
 ```{r eval=FALSE, tidy=FALSE}
-R> moby
+R > moby
 # MapPartitionsRDD[3] at textFile at NativeMethodAccessorImpl.java:-2
 ```
 
@@ -248,7 +248,7 @@ chicks_sp = createDataFrame(sql_context, chickwts)
 table'. If we examine the newly created object, we get
 
 ```{r eval=FALSE}
-R> chicks_sp
+R > chicks_sp
 # DataFrame[weight:double, feed:string]
 ```
 
@@ -257,7 +257,7 @@ R> chicks_sp
 \noindent An S3 method for `head` is also available, so
 
 ```{r eval=FALSE, tidy=FALSE}
-R> head(chicks_sp, 2)
+R > head(chicks_sp, 2)
 #  weight      feed
 #1    179 horsebean
 #2    160 horsebean
@@ -265,7 +265,7 @@ R> head(chicks_sp, 2)
 
 gives what we would expect. We can extract columns using the dollar notation, `chicks_sp$weight` or using `select`
 ```{r eval=FALSE}
-R> select(chicks_sp,  "weight")
+R > select(chicks_sp,  "weight")
 # DataFrame[weight:double]
 ```
 
@@ -280,7 +280,7 @@ filter(chicks_sp, chicks_sp$feed == "horsebean")
 
 ```{r eval=FALSE, tidy=FALSE}
 chicks_cnt = groupBy(chicks_sp, chicks_sp$feed) %>%
-  summarize(count=n(chicks_sp$feed))
+  summarize(count = n(chicks_sp$feed))
 ```
 ## Example: Spark dataframes
 

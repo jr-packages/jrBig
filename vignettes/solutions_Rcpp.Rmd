@@ -23,12 +23,12 @@ your background.
     ```
 and run the following code
     ```{r eval=FALSE}
-    cppFunction('
-      double add_c(double x, double y){
+    cppFunction("
+      double add_c(double x, double y) {
         double value = x + y;
         return value;
       }
-    ')
+    ")
 ```
 1. Call the function `add_c` and make sure it works. What happens if you pass it a vector
 or a character to the function?
@@ -68,18 +68,18 @@ the mean, i.e. `mean_r`
 mean_r = function(x) {
   n = length(x)
   m = 0
-  for(i in seq_along(x)) 
-    m = m + x[i]/n
+  for (i in seq_along(x)) 
+    m = m + x[i] / n
   m
 }
 
 sd_r = function(x) {
   n = length(x)
   var = 0; m = mean_r(x)
-  for(i in seq_along(x)) {
+  for (i in seq_along(x)) {
     var = var + (x[i] - m)^2
   }
-  sqrt(var/(n-1))
+  sqrt(var / (n - 1))
 }
 x = rnorm(10)
 mean_r(x); mean(x)
@@ -116,7 +116,3 @@ double sd_c(NumericVector x){
 
 -----
 Hint: There's a chapter on RCpp [`Efficient R programming`](https://csgillespie.github.io/efficientR/efficient-performance.html#rcpp)
-
-
-
-

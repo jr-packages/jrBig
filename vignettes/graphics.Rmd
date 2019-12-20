@@ -14,7 +14,7 @@ output: rmarkdown::html_vignette
     ```{r, message=FALSE}
     ## Should run error free
     library("bigvis")
-    data("movies", package="bigvis")
+    data("movies", package = "bigvis")
     ```
 
 1. Use `condense` and `bin` to plot the movie lengths. Try varying the `width` argument
@@ -30,7 +30,7 @@ Use `autoplot` on the binned data. Experiment with `peel`.
 x = condense(bin(movies$length, width = 1))
 plot(x)
 sm = smooth(x, h = 5 / 100)
-lines(sm[,1], sm[,2], col=2)
+lines(sm[, 1], sm[, 2], col = 2)
 autoplot(x)
 last_plot() %+% peel(x)
 ```
@@ -45,7 +45,7 @@ last_plot() %+% peel(x)
 
 1. Reproduce the plot in the notes
     ```{r eval=FALSE}
-    tableplot(movies[,3:5])
+    tableplot(movies[, 3:5])
     ```
 Use `head(movies[,3:5])` to examine the first few rows of the data. What do the plots
 mean?
@@ -56,7 +56,7 @@ do?
 1. Run the following command 
 
     ```{r eval=FALSE}
-    tableplot(movies[,3:10])
+    tableplot(movies[, 3:10])
     ```
 What do the graphs mean?
 
