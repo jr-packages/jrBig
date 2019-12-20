@@ -39,7 +39,7 @@ List the available tables using `src_tbls(sc)`.
 1. Using the `filter` dplyr function, select flights where the airtime was greater than 10 hours
 
     ```{r eval=FALSE}
-    flights_tbl %>% filter(air_time > 10*60)
+    flights_tbl %>% filter(air_time > 10 * 60)
     ```
 
 
@@ -82,4 +82,3 @@ delay.
   * Stackoverflow: [sparkr](https://stackoverflow.com/questions/tagged/sparkr) & 
   [sparklyr]](https://stackoverflow.com/questions/tagged/sparklyr] tagged questions;
   * [SparkR](https://spark.apache.org/docs/latest/sparkr.html) & [sparklyr](http://spark.rstudio.com/) documentation
-  

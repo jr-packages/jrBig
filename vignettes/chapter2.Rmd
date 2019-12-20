@@ -47,28 +47,28 @@ e = new.env()
 
 and then place a matrix into that enviroment
 ```{r}
-x = matrix(runif(10000), ncol=10)
+x = matrix(runif(10000), ncol = 10)
 e$x = x
 ```
 
 Next we'll create two functions to benchmark
 ```{r}
 f = function(x) {
-  x[1,1] = 1
+  x[1, 1] = 1
   x
 }
-g = function(e) e$x[1,1] = 1
+g = function(e) e$x[1, 1] = 1
 ```
 Then time as before
 ```{r eval=FALSE}
 system.time({
-  for(i in 1:100000) {
+  for (i in 1:100000) {
     x = f(x)
   }
 })
 
 system.time({
-  for(i in 1:100000) {
+  for (i in 1:100000) {
     g(e)
   }
 })

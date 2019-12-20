@@ -1,24 +1,47 @@
-Package: jrBig
 Type: Package
+Package: jrBig
 Title: Jumping Rivers: R for Big Data
 Version: 0.1.4
-Authors@R: c(person("Colin", "Gillespie", email="colin@jumpingrivers.com", role = c("aut", "cre")))
-Description: Data sets, functions and vignettes for the R for Big data course.
-URL: https://www.jumpingrivers.com
+Authors@R: 
+    person(given = "Colin",
+           family = "Gillespie",
+           role = c("aut", "cre"),
+           email = "colin@jumpingrivers.com")
+Description: Data sets, functions and vignettes for the R for
+    Big data course.
 License: GPL-2
+URL: https://www.jumpingrivers.com
 Depends:
     R (>= 3.3)
 Imports:
+    benchmarkme,
     dplyr (>= 0.7),
     ff,
     ffbase,
+    ggplot2,
+    jrData,
+    microbenchmark,
+    pryr,
     readr,
-    pryr, stats, microbenchmark, ggplot2, benchmarkme, jrData
+    stats
 Suggests:
-    Rcpp, knitr, rmarkdown, bigvis, tabplot, RSQLite, data.table, sparklyr,
-    nycflights13, DBI, ggplot2movies, testthat, lintr, dbplyr (>= 1.1.0)
-VignetteBuilder: knitr
+    bigvis,
+    data.table,
+    DBI,
+    dbplyr (>= 1.1.0),
+    ggplot2movies,
+    knitr,
+    lintr,
+    nycflights13,
+    Rcpp,
+    rmarkdown,
+    RSQLite,
+    sparklyr,
+    tabplot
+VignetteBuilder: 
+    knitr
 Remotes:
-  hadley/bigvis, 
-  jr-packages/jrData
-RoxygenNote: 6.1.1
+    hadley/bigvis,
+    jr-packages/jrData
+Encoding: UTF-8
+RoxygenNote: 7.0.2

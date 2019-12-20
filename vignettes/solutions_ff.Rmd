@@ -16,17 +16,17 @@ output: rmarkdown::html_vignette
     ```
 1. Create a dummy csv file and compare the read times of `read.csv.ffdf` and `read.csv`
 ```{r echo=FALSE, eval=FALSE}
-ffx = read.csv.ffdf(file=filename, header=TRUE)
-dd = read.csv(file=filename, header=TRUE)
+ffx = read.csv.ffdf(file = filename, header = TRUE)
+dd = read.csv(file = filename, header = TRUE)
 ```
 
 
 ## Solutions
 
 ```{r eval=FALSE}
-dd = matrix(rnorm(1e5), ncol=100)
+dd = matrix(rnorm(1e5), ncol = 100)
 write.csv(dd, "/tmp/tmp.csv")
 library("ff")
-system.time(read.csv.ffdf(file="/tmp/tmp.csv", header=TRUE))
-system.time(read.csv(file="/tmp/tmp.csv", header=TRUE))
+system.time(read.csv.ffdf(file = "/tmp/tmp.csv", header = TRUE))
+system.time(read.csv(file = "/tmp/tmp.csv", header = TRUE))
 ```

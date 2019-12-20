@@ -33,7 +33,7 @@ List the available tables using `src_tbls(sc)`. Look
 1. Using the `filter` dplyr function, select flights where the airtime was greater than 10 hours
 
 ```{r  eval=FALSE}
-flights_tbl %>% filter(air_time > 10*60)
+flights_tbl %>% filter(air_time > 10 * 60)
 ```
 
 
@@ -75,4 +75,3 @@ delay.
 
   * There is a nice section on creating dataframes in the [SparkR](https://spark.apache.org/docs/latest/sparkr.html) documentation.
   * Also have a look at the machine learning section.
-    

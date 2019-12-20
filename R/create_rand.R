@@ -1,8 +1,8 @@
 #' Random data set creation
 #' 
-#' A simple function for creating a n by 2 matrix filled with random numbers. The
-#' matrix is stored as a csv file. The function \code{get_rand} returns where the file
-#' is stored.
+#' A simple function for creating a n by 2 matrix filled with random numbers.
+#' The matrix is stored as a csv file. The function \code{get_rand} returns
+#' where the file is stored.
 #' @param filename  A filename (should have a .csv extension)
 #' @param n Number of rows
 #' @param seed Optional seed
@@ -22,6 +22,6 @@ create_rand = function(filename=NULL, n=1e4, seed=NULL) {
 
 #' @rdname create_rand
 #' @export
-get_rand = function(){
+get_rand = function() {
   system.file("raw-data", filename = "rand.csv", package = "jrBig")
 }

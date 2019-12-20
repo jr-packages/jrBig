@@ -20,8 +20,8 @@ output: rmarkdown::html_vignette
     ```
 and compare the read times of `read.csv.ffdf` and `read.csv`
 ```{r echo=FALSE}
-ffx = read.csv.ffdf(file=filename, header=TRUE)
-dd = read.csv(file=filename, header=TRUE)
+ffx = read.csv.ffdf(file = filename, header = TRUE)
+dd = read.csv(file = filename, header = TRUE)
 ```
 
 ## Exercise 2
@@ -33,6 +33,3 @@ Suppose we have $n$ chunks. Can you think of how we could calculate
   * The median
 
 If it makes things easier, set $n=5$
-
-
-

@@ -6,7 +6,7 @@ globalVariables("add_c")
 #' @export
 test_rcpp = function() {
   Rcpp::cppFunction("
-  int add_c(int x, int y){
+  int add_c(int x, int y) {
     return x + y;
   }
 ")

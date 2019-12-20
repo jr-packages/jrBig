@@ -22,12 +22,12 @@ your background.
     ```
 and run the following code
     ```{r eval=FALSE}
-    cppFunction('
-      double add_c(double x, double y){
+    cppFunction("
+      double add_c(double x, double y) {
         double value = x + y;
         return value;
       }
-    ')
+    ")
 ```
 1. Call the function `add_c` and make sure it works. What happens if you pass it a vector
 or a character to the function?
@@ -53,12 +53,3 @@ allowed to use `sum`, `mean`, `sd` or `var`.
 
 -----
 Hint: There's a chapter on RCpp [`Efficient R programming`](https://csgillespie.github.io/efficientR/efficient-performance.html#rcpp)
-
-
-
-
-
-
-
-
-
